@@ -62,11 +62,13 @@ const userSchema = new Schema({
         required: true
     },
     confirmed: {
-        type: Boolean
+        type: Boolean,
+        default: false
     },
     role: {
         type: String,
-        enum: ['admin', 'consultant', 'user']
+        enum: ['admin', 'consultant', 'user'],
+        default: 'user'
     },
     history: {
         type: [viewSchema]
@@ -112,3 +114,9 @@ const videoSchema = new Schema({
 const User = mongoose.model('User', userSchema);
 const Category = mongoose.model('Category', parentCategorySchema);
 const Video = mongoose.model('Video', videoSchema);
+
+module.exports = {
+    User,
+    Video,
+    Category
+};

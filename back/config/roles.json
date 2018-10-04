@@ -1,0 +1,13 @@
+{
+  "admin":{
+    "^adminroute": ["ALL"],
+    "^consultantroute": ["ALL"]
+  },
+  "consultant":{
+    "^consultantroute": ["GET", "POST"],
+    "^userroute": ["GET", "POST"]
+  },
+  "user":{
+    "^userroute": ["GET"]
+  }
+}

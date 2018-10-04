@@ -5,7 +5,8 @@
         "app_desc": "Video plateform enabling user tracking",
         "node_port": 4000,
         "json_indentation": 4,
-        "database": "mongodb-dev"
+        "database": "mongodb-dev",
+        "secret": "qujn4d8v9c8vuskw6"
     },
     "testing": {
         "config_id": "testing",
