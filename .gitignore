@@ -1,0 +1,11 @@
+# IDE FILES
+.idea/
+
+# DATABASE
+data/
+
+# BACK
+back/node_modules/
+
+# FRONT
+front/node_modules/
