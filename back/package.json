@@ -1,0 +1,33 @@
+{
+  "name": "esvideos-backend",
+  "version": "1.0.0",
+  "description": "video plateform allowing to track user's interests",
+  "main": "server.js",
+  "scripts": {
+    "test": "node test.js",
+    "start": "nodemon server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://gitlab.com/FRSHX/esvideos.git"
+  },
+  "keywords": [
+    "video",
+    "videos",
+    "tracking",
+    "behavior"
+  ],
+  "author": "Olecck",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://gitlab.com/FRSHX/esvideos/issues"
+  },
+  "homepage": "https://gitlab.com/FRSHX/esvideos#readme",
+  "dependencies": {
+    "express": "^4.16.3",
+    "lodash": "^4.17.11"
+  },
+  "devDependencies": {
+    "nodemon": "^1.18.4"
+  }
+}

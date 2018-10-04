@@ -1,0 +1,24 @@
+{
+    "development": {
+        "config_id": "development",
+        "app_name": "esvideos",
+        "app_desc": "Video plateform enabling user tracking",
+        "node_port": 4000,
+        "json_indentation": 4,
+        "database": "mongodb-dev"
+    },
+    "testing": {
+        "config_id": "testing",
+        "database": "mongodb-test"
+    },
+    "staging": {
+        "config_id": "staging",
+        "node_port": 8080,
+        "database": "mongodb-stag"
+    },
+    "production": {
+        "config_id": "production",
+        "node_port": 8080,
+        "database": "mongodb-prod"
+    }
+}

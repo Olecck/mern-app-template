@@ -1,0 +1,30 @@
+version: '2'
+services:
+  mongodb-dev:
+    image: mongo:latest
+    environment:
+      - MONGO_DATA_DIR=/data/db
+      - MONGO_LOG_DIR=/dev/null
+    volumes:
+      - ./data/db:/data/db
+    ports:
+      - 27017:27017
+    command: mongod --smallfiles --logpath=/dev/null # --quiet
+
+  back:
+    build: ./back
+    ports:
+      - 4000:4000
+    volumes:
+      - ./back:/usr/src/app
+      - ./back/node_modules:/usr/src/app/node_modules
+    command: npm start
+
+  front:
+    build: ./front
+    ports:
+      - 3000:3000
+    volumes:
+      - ./front:/usr/src/app
+      - ./front/node_modules:/usr/src/app/node_modules
+    command: npm start
