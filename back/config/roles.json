@@ -8,6 +8,7 @@
     "^userroute": ["GET", "POST"]
   },
   "user":{
-    "^userroute": ["GET"]
+    "^userroute": ["GET"],
+    "^confirm":["POST"]
   }
 }

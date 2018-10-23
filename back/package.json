@@ -24,8 +24,12 @@
   },
   "homepage": "https://gitlab.com/FRSHX/esvideos#readme",
   "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "body-parser": "^1.18.3",
     "express": "^4.16.3",
-    "lodash": "^4.17.11"
+    "jsonwebtoken": "^8.3.0",
+    "lodash": "^4.17.11",
+    "mongoose": "^5.3.2"
   },
   "devDependencies": {
     "nodemon": "^1.18.4"

@@ -1,29 +1,30 @@
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
-const User = require('../model/models').User;
+const models = require('../model/models');
+const User = models.User;
 const errors = require('./errors').errors;
 const roles = require('../config/roles');
 
 function register(username, email, password){
-    return new Promise(function(resolve, reject){
+    const hashedPassword = bcrypt.hashSync(password, 8);
 
-        const hashedPassword = bcrypt.hashSync(password, 8);
-
+    return new Promise((resolve, reject) =>
         User.create({
             username: username,
             email: email,
             password: hashedPassword
         }, function(err, user){
             if (err){
-                reject(errors[202]);
+                console.log(err);
+                reject(errors[202].errorMessage());
             }
-            resolve(user.id);
-        });
-    });
+            resolve(user);
+        })
+    );
 }
 
-function ensureAuthenticated(email, password, requestedRessource){
-    return new Promise(function(resolve, reject){
+function login(email, password){
+    return new Promise((resolve, reject) =>
         User.findOne({email: email}, function(err, user) {
             if (err) {
                 reject(errors[201]); // db error
@@ -36,23 +37,43 @@ function ensureAuthenticated(email, password, requestedRessource){
                 reject(errors[401]) // wrong password
             }
 
-            // user is found, password is valid, we just need to check if the ressource is allowed.
+            resolve(
+                jwt.sign({
+                    id: user._id ,
+                    role: user.role,
+                    username: user.username,
+                    email: user.email
+                }, global.gConfig.secret, {
+                    expiresIn: 86400 // expires in 24 hours
+                })
+            );
+        })
+    );
+}
 
-            const allowedRessources = Object.keys(roles[user.role]);
+function ensureAuthenticated(token, requestedRessource){
+    return new Promise((resolve, reject) =>{
+        jwt.verify(token, global.gConfig.secret, function(err, decoded){
+            if (err) {
+                reject(err);
+            }
+            const allowedRessources = roles[decoded.role];
+            let reg;
             for(let ressource of allowedRessources){
-                if (ressource.test(requestedRessource)){
-                    const token = jwt.sign({ id: user._id }, global.gConfig.secret, {
-                        expiresIn: 86400 // expires in 24 hours
-                    });
-                    resolve(token); // send token
+                console.log('ok');
+                reg = new RegExp(ressource);
+                if (reg.test(requestedRessource)){
+                    resolve(true);
                 }
             }
-            reject(errors[402]); //not allowed to see this ressource
+            reject(errors[402].errorMessage());
         });
+
     });
 }
 
 module.exports = {
     register,
+    login,
     ensureAuthenticated
 };

@@ -17,7 +17,7 @@ services:
       - 4000:4000
     volumes:
       - ./back:/usr/src/app
-      - ./back/node_modules:/usr/src/app/node_modules
+      - /usr/src/app/node_modules
     command: npm start
 
   front:
@@ -26,5 +26,5 @@ services:
       - 3000:3000
     volumes:
       - ./front:/usr/src/app
-      - ./front/node_modules:/usr/src/app/node_modules
+      - /usr/src/app/node_modules
     command: npm start

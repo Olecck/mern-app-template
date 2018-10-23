@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+
 const Schema = mongoose.Schema;
 
 const viewSchema = new Schema({
@@ -58,7 +59,7 @@ const userSchema = new Schema({
     password: {
         type: String,
         minlength: 6,
-        maxlength: 50,
+        maxlength: 255,
         required: true
     },
     confirmed: {

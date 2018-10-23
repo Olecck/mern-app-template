@@ -6,6 +6,7 @@
         "node_port": 4000,
         "json_indentation": 4,
         "database": "mongodb-dev",
+        "db_port": 27017,
         "secret": "qujn4d8v9c8vuskw6"
     },
     "testing": {
