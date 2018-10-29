@@ -51,29 +51,46 @@ function login(email, password){
     );
 }
 
-function ensureAuthenticated(token, requestedRessource){
-    return new Promise((resolve, reject) =>{
+function confirm(username){
+    return User.confirm(username);
+}
+
+function verifyToken(token){
+    return new Promise((resolve, reject) => {
         jwt.verify(token, global.gConfig.secret, function(err, decoded){
             if (err) {
                 reject(err);
+            } else {
+                resolve(decoded);
             }
-            const allowedRessources = roles[decoded.role];
-            let reg;
-            for(let ressource of allowedRessources){
-                console.log('ok');
-                reg = new RegExp(ressource);
-                if (reg.test(requestedRessource)){
-                    resolve(true);
-                }
-            }
-            reject(errors[402].errorMessage());
         });
-
+    });
+}
+function ensureAuthenticated(token, requestedRessource, method){
+    return new Promise((resolve, reject) =>{
+        verifyToken(token).then(
+            decoded => {
+                const allowedRessources = roles[decoded.role];
+                let reg;
+                for(let route in allowedRessources){
+                    if (allowedRessources.hasOwnProperty(route)){
+                        reg = new RegExp(route);
+                        if (reg.test(requestedRessource)){
+                            if (allowedRessources[route].indexOf(method) >= 0){
+                                resolve(decoded);
+                            }
+                        }
+                    }
+                }
+                reject(errors[402].errorMessage());
+            }
+        );
     });
 }
 
 module.exports = {
     register,
     login,
+    confirm,
     ensureAuthenticated
 };

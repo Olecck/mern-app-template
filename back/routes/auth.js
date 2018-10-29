@@ -22,12 +22,18 @@ router.post('/register', function(req, res){
     );
 });
 
-router.post('/confirm', function(req, res){
-    authUtils.ensureAuthenticated(req.headers.authorization, "/auth/confirm").then(
-        ok => res.send({
-            status: "success",
-            data: ok
-        }),
+router.get('/confirm', function(req, res){
+    authUtils.ensureAuthenticated(req.headers.authorization, "/auth/confirm", req.method).then(
+        decoded => authUtils.confirm(decoded.username).then(
+            success => res.send({
+                status: "success",
+                message: "successfully confirmed user"
+            }),
+            err => res.send({
+                status: "error",
+                data: err
+            })
+        ),
         err => res.send({
             status: "error",
             data: err

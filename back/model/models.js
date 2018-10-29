@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const errors = require('../controllers/errors').errors;
 
 const Schema = mongoose.Schema;
 
@@ -78,6 +79,21 @@ const userSchema = new Schema({
         type: [String]
     }
 });
+
+userSchema.statics.confirm = function(username){
+    return new Promise((resolve, reject)=> {
+        this.model('User').findOneAndUpdate({username: username}, {confirmed: true}, function (err, user) {
+            if (err) {
+                reject(errors[201]);
+            }
+            if (!user) {
+                reject(errors[301]); // user not found
+            }
+
+            resolve(true);
+        })
+    });
+};
 
 const videoSchema = new Schema({
     url: { // where the video resides

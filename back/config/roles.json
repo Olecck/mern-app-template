@@ -1,14 +1,16 @@
 {
   "admin":{
-    "^adminroute": ["ALL"],
-    "^consultantroute": ["ALL"]
+    "^/adminroute": ["ALL"],
+    "^/consultantroute": ["ALL"],
+    "^/auth/confirm":["GET"]
   },
   "consultant":{
-    "^consultantroute": ["GET", "POST"],
-    "^userroute": ["GET", "POST"]
+    "^/consultantroute": ["GET", "POST"],
+    "^/userroute": ["GET", "POST"],
+    "^/auth/confirm":["GET"]
   },
   "user":{
-    "^userroute": ["GET"],
-    "^confirm":["POST"]
+    "^/userroute": ["GET"],
+    "^/auth/confirm":["GET"]
   }
 }
